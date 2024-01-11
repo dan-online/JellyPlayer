@@ -17,6 +17,7 @@ import LikeButton from "../buttons/likeButton";
 import MarkPlayedButton from "../buttons/markPlayedButton";
 import PlayButton from "../buttons/playButton";
 import { MdiTelevisionClassic } from "../icons/mdiTelevisionClassic";
+import { BlurredImage } from "../utils/blurredImage";
 
 /**
  * @typedef {Object} Props
@@ -49,6 +50,9 @@ export const EpisodeCard = ({
 	const defaultOnClick = () => {
 		navigate(`/episode/${item.Id}`);
 	};
+
+	console.log("sup");
+
 	return (
 		<div
 			className="card card-episode"
@@ -72,38 +76,21 @@ export const EpisodeCard = ({
 							<div className="material-symbols-rounded">done</div>
 						</div>
 					)}
-					{!!imageBlurhash && (
-						<Blurhash
-							hash={imageBlurhash}
-							width={128}
-							height={128}
-							resolutionX={24}
-							resolutionY={24}
-							className="card-image-blurhash"
-						/>
-					)}
 					<div className="card-image-icon-container">
 						<div className="material-symbols-rounded">tv_gen</div>
 					</div>
-					<img
-						alt={item.Name}
-						src={api.getItemImageUrl(item.Id, "Primary", {
-							quality: 90,
-							fillHeight: 512,
-							fillWidth: 512,
-						})}
+					<BlurredImage
+						item={item}
+						width={512}
+						height={288}
+						blurredClassName="card-image-blurhash"
 						style={{
 							height: "100%",
 							width: "100%",
 							opacity: 0,
 						}}
-						loading="lazy"
-						onLoad={(e) => {
-							e.target.style.opacity = 1;
-						}}
 						className="card-image"
 					/>
-
 					<div className="card-overlay">
 						<PlayButton
 							itemId={item.Id}
